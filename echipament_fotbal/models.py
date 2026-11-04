@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 
 class Brand(models.Model):
@@ -95,3 +96,65 @@ class Magazin(models.Model):
 
     def __str__(self):
         return f"{self.nume} ({self.oras})"
+
+
+class Produs(models.Model):
+
+    class Gen(models.TextChoices):
+        BARBATI = "barbati", "Barbati"
+        FEMEI = "femei", "Femei"
+        COPII = "copii", "Copii"
+        UNISEX = "unisex", "Unisex"
+
+    nume = models.CharField(
+        max_length=50,
+        help_text="Numele produsului"
+    )
+    descriere = models.TextField(null=True, blank=True)
+    pret = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        help_text="Pretul produsului",
+        error_messages={"max_digits" : "Pretul depaseste lungimea permisa"}
+    )
+    culoare = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+    marimi_disponibile = ArrayField(
+        models.CharField(max_length=5),
+        default=list,
+        blank=True,
+        help_text="Marimi disponibile prin virgula (40,41,42)",
+    )
+    gen = models.CharField(
+        max_length=10,
+        choices=Gen.choices,
+        default=Gen.UNISEX,
+    )
+    in_promotie = models.BooleanField(default=False)
+    data_adaugare = models.DateTimeField(auto_now_add=True)
+    categorie = models.ForeignKey(Categorie, on_delete=models.PROTECT)
+    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Produse"
+        ordering = ["nume"]
+        indexes = [
+            models.Index(fields=["nume"], name="produs_nume_idx"),
+            models.Index(fields=["gen"], name="produs_gen_idx"),
+            models.Index(fields=["in_promotie"], name="produs_in_promotie_idx"),
+            models.Index(fields=["pret"], name="produs_pret_idx"),
+        ]
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(pret__gt=0),
+                name="produs_pret_valid",
+                violation_error_message="Pretul trebuie sa fie mai mare ca 0",
+
+            )
+        ]
+
+    def __str__(self):
+        return self.nume
