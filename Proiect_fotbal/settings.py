@@ -143,3 +143,6 @@ FIRMA = {
     "email": "goalgearsupport@gmail.com",
     "numar_magazine": "2",
 }
+
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
