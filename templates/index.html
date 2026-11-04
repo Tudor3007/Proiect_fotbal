@@ -1,0 +1,30 @@
+{% extends "baza.html" %}
+{% load static %}
+{% block titlu %}
+    Acasa-Goal Gear
+{% endblock %}
+
+{% block continut %}
+    <section id="bine_ati_venit">
+    <img src="{% static 'imagini/teren.jpg' %}" alt="Teren de fotbal">
+        <h2>Bine ati venit!</h2>
+        <p>Goal Gear este un magazin online de echipament de fotbal pentru oricine
+            joaca fotbal. Gasesti la noi ghete, tricouri, mingi, manusi de portar,
+            aparatori si accesorii de antrenament.</p>
+    </section>
+
+    <section id="promotii">
+        <h2>Promotii</h2>
+        <p>In aceasta luna ai 20% reducere la toate mingile si transport gratuit
+            la comenzile de peste 300 lei.</p>
+    </section>
+
+    <section id="program">
+        <h2>Program</h2>
+        <ul>
+            <li>Luni - Vineri: 09:00 - 20:00</li>
+            <li>Sambata: 10:00 - 16:00</li>
+            <li>Duminica: inchis</li>
+        </ul>
+    </section>
+{% endblock %}

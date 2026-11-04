@@ -1,0 +1,13 @@
+{% extends "baza.html" %}
+
+{% block titlu %}
+    Informatii despre server
+{% endblock %}
+
+{% block continut %}
+    <h2>Informatii despre server</h2>
+    <section id="data_ora">
+        <h3>Data si ora:</h3>
+        <p>{{ data_ora }}</p>
+    </section>
+{% endblock %}

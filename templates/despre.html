@@ -1,0 +1,26 @@
+{% extends "baza.html" %}
+{% load static %}
+
+{% block titlu %}
+    Despre - Goal Gear
+{% endblock %}
+
+{% block continut %}
+    <section id="cine_suntem">
+        <h2>Cine suntem?</h2>
+        <p>Goal Gear este un magazin online de echipament de fotbal, infiintat
+            in 2020 de o echipa de pasionati de fotbal. Ne-am propus sa oferim
+            echipament de calitate la preturi accesibile, atat pentru incepatori,
+            cat si pentru jucatorii experimentati.</p>
+    </section>
+
+    <section id="ce_oferim">
+        <h2>Ce oferim?</h2>
+        <p>In magazinul nostru gasesti ghete, tricouri si echipamente ale
+            echipelor, mingi, manusi de portar, aparatori si accesorii de
+            antrenament de la branduri cunoscute. Produsele sunt livrate in
+            toata tara, iar comenzile de peste 300 de lei beneficiaza de transport
+            gratuit.</p>
+        <img src="{% static 'imagini/teren.jpg' %}" alt="Teren de fotbal">
+    </section>
+{% endblock %}

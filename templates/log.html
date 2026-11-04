@@ -1,0 +1,19 @@
+{% extends "baza.html" %}
+
+{% block titlu %}
+    Log
+{% endblock %}
+
+{% block continut %}
+    <h2>Log accesari</h2>
+    <ul>{{ html|safe }}</ul>
+    {{ mesaj }}
+    {{ mesaj_detalii|safe }}
+    {{ mesaj_nr|safe }}
+    {{ tabel_html|safe }}
+    {{ sectiune_parametri|safe }}
+    <p>
+        Pagina cu cele mai multe accesari este: {{ pagina_max }} <br>
+        Pagina cu cele mai putine accesari este: {{ pagina_min }}
+    </p>
+{% endblock %}

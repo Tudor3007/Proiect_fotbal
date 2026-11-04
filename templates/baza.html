@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block titlu %} Goal Gear {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Goal Gear</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Acasa</a>
+                    <ul>
+                        <li><a href="{% url 'index' %}#promotii">Promotii</a></li>
+                        <li><a href="{% url 'index' %}#program">Program</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'despre' %}">Despre</a></li>
+                <li><a href="{% url 'istoric' %}">Istoric</a></li>
+                <li><a href="{% url 'produse' %}">Produse</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li><a href="{% url 'cos_virtual' %}">Cos virtual</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block continut %}{% endblock %}
+    </main>
+
+    <footer>
+        IP-ul tau: {{ request.ip_client }} <br>
+        Nume: {{ firma.nume }} <br>
+        Telefon: {{ firma.telefon }} <br>
+        Adresa: {{ firma.adresa }} <br>
+        E-mail: {{ firma.email }} <br>
+        Numar magazine: {{ firma.numar_magazine }} <br>
+        Firma an infiintare: {{ firma.an_infiintare }} <br>
+        ©{{ firma.an_infiintare }} {{ firma.nume }}. Toate drepturile rezervate.©
+
+
+    </footer>
+</body>
+</html>

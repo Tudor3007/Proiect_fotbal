@@ -1,0 +1,67 @@
+nav ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav > ul {
+    display: flex;
+}
+
+nav li {
+    position: relative;
+}
+
+nav a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+nav ul ul{
+    display: none;
+    position: absolute;
+    background-color: coral;
+    z-index: 10;
+    top: 100%;
+    left: 0;
+}
+
+nav li:hover > ul{
+    display: block;
+}
+
+body{
+    font-family: Arial;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: blanchedalmond;
+    margin: 0;
+}
+
+main {
+    flex: 1;
+}
+
+header{
+    font-family: "Times New Roman";
+    background-color: azure;
+}
+
+img{
+    width: 400px;
+    max-width: 100%;
+    height: auto;
+}
+
+footer {
+    background-color: darkgray;
+
+}
+
+@media (max-width: 600px){
+    nav > ul{
+        flex-direction: column;
+    }
+}
