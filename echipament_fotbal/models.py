@@ -64,3 +64,34 @@ class Categorie(models.Model):
 
     def __str__(self):
         return self.nume
+
+
+class Magazin(models.Model):
+    nume = models.CharField(
+        max_length=100,
+        help_text="Numele magazinului (ex: Goal Gear Centru)",
+        error_messages={"max_length": "Lungimea maxima a textului este depasita"},
+    )
+    adresa = models.CharField(
+        max_length=200,
+        help_text="Adresa magazinului",
+    )
+    oras = models.CharField(
+        max_length=50,
+        help_text="Oras",
+    )
+    telefon = models.CharField(
+        max_length=15,
+        error_messages={"max_length": "Numarul de telefon este prea lung"}
+    )
+    data_deschidere = models.DateField(
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name_plural = "Magazine"
+        ordering = ["oras", "nume"]
+
+    def __str__(self):
+        return f"{self.nume} ({self.oras})"
