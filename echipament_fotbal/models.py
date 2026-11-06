@@ -137,6 +137,7 @@ class Produs(models.Model):
     data_adaugare = models.DateTimeField(auto_now_add=True)
     categorie = models.ForeignKey(Categorie, on_delete=models.PROTECT)
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
+    magazine = models.ManyToManyField(Magazin, through="DisponibilIn", blank=True)
 
     class Meta:
         verbose_name_plural = "Produse"
@@ -158,3 +159,50 @@ class Produs(models.Model):
 
     def __str__(self):
         return self.nume
+
+class Raion(models.Model):
+    magazin= models.ForeignKey(Magazin, on_delete=models.CASCADE)
+    numar = models.PositiveIntegerField(help_text="Numarul Raionului")
+    nume= models.CharField(max_length=50, help_text="Numele Raionului (ex: Ghete, Tricouri)")
+    etaj = models.IntegerField(default=0, help_text="Numarul etajului")
+
+    class Meta:
+        verbose_name_plural = "Raioane"
+        ordering = ["magazin", "numar"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["magazin", "numar"],
+                name = "raion_numar_unic_in_magazin",
+                violation_error_message="exista deja un raion cu acest numar in magazin",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(etaj__gte=0) & models.Q(etaj__lte=5),
+                name="raion_etaj_valid",
+                violation_error_message="Etajul este invalid"
+            )
+        ]
+
+    def __str__(self):
+        return f"Raion {self.numar} - {self.nume} ({self.magazin.nume})"
+
+class DisponibilIn(models.Model):
+    produs = models.ForeignKey(Produs, on_delete=models.CASCADE)
+    magazin = models.ForeignKey(Magazin, on_delete=models.CASCADE)
+    cantitate = models.PositiveIntegerField(default=0, help_text="Bucati disponibile in stoc")
+
+    class Meta:
+        verbose_name_plural = "Disponibilitate in magazine"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["produs", "magazin"],
+                name="disponibil_in_produs_magazin",
+                violation_error_message="combinatia apare deja",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(cantitate__gte=0),
+                name="disponibil_in_cantitate_valida",
+                violation_error_message="Cantitatea selectata este invalida",
+            )
+        ]
+    def __str__(self):
+        return f"{self.produs.nume} x{self.cantitate} - disponibil in {self.magazin.nume}"
