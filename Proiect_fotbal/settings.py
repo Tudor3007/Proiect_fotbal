@@ -142,7 +142,7 @@ FIRMA = {
     "telefon": "+40712345678",
     "adresa": "Bucuresti, Strada fotbal, nr.6",
     "email": "goalgearsupport@gmail.com",
-    "numar_magazine": "2",
+    "numar_magazine": "5",
 }
 
 MEDIA_ROOT = BASE_DIR / "media"
