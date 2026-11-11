@@ -192,6 +192,7 @@ class DisponibilIn(models.Model):
 
     class Meta:
         verbose_name_plural = "Disponibilitate in magazine"
+        verbose_name= "Disponibilitate"
         constraints = [
             models.UniqueConstraint(
                 fields=["produs", "magazin"],
