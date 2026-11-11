@@ -135,6 +135,14 @@ class Produs(models.Model):
     )
     in_promotie = models.BooleanField(default=False)
     data_adaugare = models.DateTimeField(auto_now_add=True)
+    imagine = models.ImageField(upload_to="produse/",null=True, blank=True)
+    stoc= models.PositiveIntegerField(default=0, help_text="Numarul Produselor in Stoc")
+    taguri = ArrayField(
+        models.CharField(max_length=30),
+        default=list,
+        blank=True,
+        help_text="Tagul asociat produselor",
+    )
     categorie = models.ForeignKey(Categorie, on_delete=models.PROTECT)
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
     magazine = models.ManyToManyField(Magazin, through="DisponibilIn", blank=True)

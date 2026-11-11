@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from urllib.parse import urlencode
 from django.shortcuts import render
+from .models import Produs
 
 zile=["Luni","Marti","Miercuri","Joi","Vineri","Sambata","Duminica"]
 luni=["Ianuarie","Februarie","Martie","Aprilie","Mai","Iunie","Iulie","August","Septembrie","Octombrie",
@@ -77,11 +78,11 @@ def inregistreaza_accesare(request):
 
 def index(request):
     acc=inregistreaza_accesare(request)
-    return render(request, "index.html")
+    return render(request, "echipament_fotbal/index.html")
 def info(request):
     acc = inregistreaza_accesare(request)
     tip = request.GET.get("data", "")
-    return render(request, "info.html", {"data_ora": acc.calculeaza_data("%A, %d %B %Y %H:%M:%S", tip=tip)})
+    return render(request, "echipament_fotbal/info.html", {"data_ora": acc.calculeaza_data("%A, %d %B %Y %H:%M:%S", tip=tip)})
 
 
 def log(request):
@@ -173,7 +174,7 @@ def log(request):
         html=html+(f"<li>id: {a.id} <br>"
                    f"pagina: {a.pagina()} <br>"
                    f"data: {a.calculeaza_data("%A, %d %B %Y %H:%M:%S")}</li>")
-    return render(request, "log.html", {
+    return render(request, "echipament_fotbal/log.html", {
         "html": html,
         "mesaj": mesaj,
         "mesaj_nr": mesaj_nr,
@@ -189,12 +190,12 @@ def log(request):
 
 def istoric(request):
     acc = inregistreaza_accesare(request)
-    return render(request, "istoric.html")
+    return render(request, "echipament_fotbal/istoric.html")
 
 
 def despre(request):
     acc = inregistreaza_accesare(request)
-    return render(request, "despre.html")
+    return render(request, "echipament_fotbal/despre.html")
 
 def accesare(request,id):
     acc = inregistreaza_accesare(request)
@@ -212,18 +213,18 @@ def accesare(request,id):
             gasit=1
     if gasit==0:
         mesaj=f"Nu exista accesarea cu id-ul: {id}"
-        return render(request, "accesare.html", {"mesaj": mesaj})
+        return render(request, "echipament_fotbal/accesare.html", {"mesaj": mesaj})
     else:
-        return render(request, "accesare.html", {"mesaj": mesaj})
+        return render(request, "echipament_fotbal/accesare.html", {"mesaj": mesaj})
 
 def produse(request):
     acc = inregistreaza_accesare(request)
-    return render(request, "in_lucru.html")
-
+    lista_produse = Produs.objects.all()
+    return render(request, "echipament_fotbal/produse.html", {"produse": lista_produse})
 def contact(request):
     acc = inregistreaza_accesare(request)
-    return render(request, "in_lucru.html")
+    return render(request, "echipament_fotbal/in_lucru.html")
 
 def cos_virtual(request):
     acc = inregistreaza_accesare(request)
-    return render(request, "in_lucru.html")
+    return render(request, "echipament_fotbal/in_lucru.html")

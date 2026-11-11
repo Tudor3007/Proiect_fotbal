@@ -47,10 +47,10 @@ class ProdusAdmin(admin.ModelAdmin):
     list_per_page = 5
     fieldsets = (
     ("Date Principale", {
-        "fields": ("nume", "pret", "categorie", "gen", "in_promotie")
+        "fields": ("nume", "pret", "categorie", "gen", "in_promotie", "stoc" )
     }),
     ("Informatii suplimentare", {
-        "fields": ("descriere", "culoare", "marimi_disponibile", "brand"),
+        "fields": ("descriere", "culoare", "marimi_disponibile", "brand", "taguri", "imagine"),
         "classes": ("collapse",),
     })
     )

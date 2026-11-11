@@ -1,0 +1,23 @@
+{% extends "echipament_fotbal/baza.html" %}
+{% load static %}
+
+{% block continut %}
+    <h1>Produse</h1>
+    <div class="lista-produse">
+        {% for p in produse %}
+        <div class="produs">
+            <h2>{{ p.nume }}</h2>
+            {% if p.imagine %}
+                <img src="{{ p.imagine.url }}" alt="{{ p.nume }}">
+            {% else %}
+                <img src="{% static 'imagini/imagine_indisponibila.jpg' %}" alt="imagine indisponibila">
+            {% endif %}
+            <p>Categorie: {{ p.categorie.nume}}</p>
+            <p>Pret: {{ p.pret }} lei</p>
+            <p>Brand: {{ p.brand.nume }}</p>
+        </div>
+        {% empty %}
+        <p>Nu exista produse</p>
+        {% endfor %}
+    </div>
+{% endblock %}

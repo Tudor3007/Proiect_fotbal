@@ -147,3 +147,5 @@ FIRMA = {
 
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
+STOC_MIN = 5
+PROD_PER_PAG = 5
