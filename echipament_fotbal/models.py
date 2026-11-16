@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.urls import reverse
 
 
 class Brand(models.Model):
@@ -167,6 +168,9 @@ class Produs(models.Model):
 
     def __str__(self):
         return self.nume
+
+    def get_absolute_url(self):
+        return reverse("produs", args=[self.id])
 
 class Raion(models.Model):
     magazin= models.ForeignKey(Magazin, on_delete=models.CASCADE)

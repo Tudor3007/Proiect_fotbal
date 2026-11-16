@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from datetime import datetime
 from urllib.parse import urlencode
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Produs
 from django.core.mail import send_mail
 
@@ -240,3 +240,9 @@ def trimite_mail(request):
         fail_silently=False,
     )
     return HttpResponse("Mail trimis!")
+
+def produs(request, id):
+    acc = inregistreaza_accesare(request)
+    p =  get_object_or_404(Produs, id=id)
+    similare = Produs.objects.filter(categorie=p.categorie).exclude(id=p.id).order_by("?")[:3]
+    return render(request, "echipament_fotbal/produs.html", {"produs": p, "similare": similare})

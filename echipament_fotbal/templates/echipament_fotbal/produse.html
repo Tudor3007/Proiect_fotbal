@@ -6,7 +6,7 @@
     <div class="lista-produse">
         {% for p in produse %}
         <div class="produs">
-            <h2>{{ p.nume }}</h2>
+            <h2><a href="{{ p.get_absolute_url }}">{{ p.nume }}</a></h2>
             {% if p.imagine %}
                 <img src="{{ p.imagine.url }}" alt="{{ p.nume }}">
             {% else %}
