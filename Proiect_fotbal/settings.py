@@ -130,9 +130,18 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
+from .secrete import parola_email
+
 MAILERS = {
     "default": {
-        "BACKEND": "django.core.mail.backends.console.EmailBackend",
+        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "OPTIONS": {
+            "host": "smtp.gmail.com",
+            "port": 587,
+            "username": "goalgear2021@gmail.com",
+            "password": parola_email,
+            "use_tls": True,
+        },
     },
 }
 
@@ -147,5 +156,7 @@ FIRMA = {
 
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
+
 STOC_MIN = 5
 PROD_PER_PAG = 5
+

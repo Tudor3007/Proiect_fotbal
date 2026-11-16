@@ -3,6 +3,7 @@ from datetime import datetime
 from urllib.parse import urlencode
 from django.shortcuts import render
 from .models import Produs
+from django.core.mail import send_mail
 
 zile=["Luni","Marti","Miercuri","Joi","Vineri","Sambata","Duminica"]
 luni=["Ianuarie","Februarie","Martie","Aprilie","Mai","Iunie","Iulie","August","Septembrie","Octombrie",
@@ -228,3 +229,14 @@ def contact(request):
 def cos_virtual(request):
     acc = inregistreaza_accesare(request)
     return render(request, "echipament_fotbal/in_lucru.html")
+
+def trimite_mail(request):
+    send_mail(
+        subject="Test Goal Gear",
+        message="Salut! Acesta este un mail de test trimis de site-ul Goal Gear.",
+        html_message="<h1>Goal Gear</h1><p>Salut! Acesta este un <b>mail de test</b> trimis de site-ul Goal Gear.</p>",
+        from_email=None,
+        recipient_list=["tudor.pencea30@gmail.com"],
+        fail_silently=False,
+    )
+    return HttpResponse("Mail trimis!")

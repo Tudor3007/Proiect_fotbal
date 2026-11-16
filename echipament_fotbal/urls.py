@@ -12,4 +12,6 @@ urlpatterns = [
     path("produse", views.produse, name="produse"),
     path("contact", views.contact, name="contact"),
     path("cos_virtual", views.cos_virtual, name="cos_virtual"),
+    path("trimite_mail", views.trimite_mail, name="trimite_mail"),
+
 ]
