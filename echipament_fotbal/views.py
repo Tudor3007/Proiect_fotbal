@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 from django.shortcuts import render, get_object_or_404
 from .models import Produs
 from django.core.mail import send_mail
+from django.conf import settings
 
 zile=["Luni","Marti","Miercuri","Joi","Vineri","Sambata","Duminica"]
 luni=["Ianuarie","Februarie","Martie","Aprilie","Mai","Iunie","Iulie","August","Septembrie","Octombrie",
@@ -228,7 +229,7 @@ def produse(request):
     if sort == "d":
         coloana="-" + coloana
     lista_produse = Produs.objects.order_by(coloana)
-    return render(request, "echipament_fotbal/produse.html", {"produse": lista_produse})
+    return render(request, "echipament_fotbal/produse.html", {"produse": lista_produse, "stoc_min": settings.STOC_MIN})
 def contact(request):
     acc = inregistreaza_accesare(request)
     return render(request, "echipament_fotbal/in_lucru.html")
@@ -252,4 +253,4 @@ def produs(request, id):
     acc = inregistreaza_accesare(request)
     p =  get_object_or_404(Produs, id=id)
     similare = Produs.objects.filter(categorie=p.categorie).exclude(id=p.id).order_by("?")[:3]
-    return render(request, "echipament_fotbal/produs.html", {"produs": p, "similare": similare})
+    return render(request, "echipament_fotbal/produs.html", {"produs": p, "similare": similare, "stoc_min": settings.STOC_MIN})

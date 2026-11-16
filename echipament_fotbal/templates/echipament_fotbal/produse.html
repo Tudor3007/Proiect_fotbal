@@ -24,6 +24,9 @@
             <p>Categorie: {{ p.categorie.nume}}</p>
             <p>Pret: {{ p.pret }} lei</p>
             <p>Brand: {{ p.brand.nume }}</p>
+            {% if p.stoc < stoc_min %}
+                <p class="stoc-limitat">Stoc limitat!</p>
+            {% endif %}
         </div>
         {% empty %}
         <p>Nu exista produse</p>

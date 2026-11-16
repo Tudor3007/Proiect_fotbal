@@ -9,7 +9,9 @@
         {% else %}
             <img src="{% static 'imagini/imagine_indisponibila.jpg' %}" alt="imagine indisponibila">
         {% endif %}
-
+        {% if produs.stoc < stoc_min %}
+                <p class="stoc-limitat">Stoc limitat!</p>
+        {% endif %}
         <p>Descriere: {{ produs.descriere }}</p>
         <p>Pret: {{ produs.pret }} lei</p>
         <p>Categorie: {{ produs.categorie }}</p>

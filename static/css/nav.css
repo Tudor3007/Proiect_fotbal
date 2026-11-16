@@ -97,3 +97,14 @@ footer {
     gap: 15px;
     margin-bottom: 20px;
 }
+
+.stoc-limitat {
+    color: #cc0000;
+    font-weight: bold;
+    background-color: #ffe5e5;
+    border: 1px solid #cc0000;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: block;
+    width: fit-content;
+}
