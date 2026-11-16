@@ -220,7 +220,14 @@ def accesare(request,id):
 
 def produse(request):
     acc = inregistreaza_accesare(request)
-    lista_produse = Produs.objects.all()
+    coloane_permise=["nume", "pret", "stoc", "data_adaugare"]
+    coloana = request.GET.get("coloana", "nume")
+    sort=request.GET.get("sort", "a")
+    if coloana not in coloane_permise:
+        coloana="nume"
+    if sort == "d":
+        coloana="-" + coloana
+    lista_produse = Produs.objects.order_by(coloana)
     return render(request, "echipament_fotbal/produse.html", {"produse": lista_produse})
 def contact(request):
     acc = inregistreaza_accesare(request)

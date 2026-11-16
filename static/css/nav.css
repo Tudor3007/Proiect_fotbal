@@ -91,3 +91,9 @@ footer {
 .produs h2 {
     font-size: 18px;
 }
+
+.sortare {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}

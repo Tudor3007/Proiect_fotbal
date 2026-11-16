@@ -3,6 +3,15 @@
 
 {% block continut %}
     <h1>Produse</h1>
+    <div class="sortare">
+        <span>Sorteaza dupa:</span>
+        <a href="?coloana=nume&sort=a">Nume A-Z</a>
+        <a href="?coloana=nume&sort=d">Nume Z-A</a>
+        <a href="?coloana=pret&sort=a">Pret crescator</a>
+        <a href="?coloana=pret&sort=d">Pret descrescator</a>
+        <a href="?coloana=stoc&sort=d">Stoc (cel mai mare)</a>
+        <a href="?coloana=data_adaugare&sort=d">Cele mai noi</a>
+    </div>
     <div class="lista-produse">
         {% for p in produse %}
         <div class="produs">
