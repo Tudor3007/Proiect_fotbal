@@ -12,6 +12,14 @@
         <a href="?coloana=stoc&sort=d">Stoc (cel mai mare)</a>
         <a href="?coloana=data_adaugare&sort=d">Cele mai noi</a>
     </div>
+    {% if taguri_eliminare %}
+        <div class="taguri">
+            <span>Filtre active:</span>
+            {% for t, url in taguri_eliminare %}
+                <a class="tag tag-activ" href="?{{ url }}">{{ t }} ✕</a>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="lista-produse">
         {% for p in produse %}
         <div class="produs">
@@ -27,6 +35,15 @@
             {% if p.stoc < stoc_min %}
                 <p class="stoc-limitat">Stoc limitat!</p>
             {% endif %}
+            <div class="taguri">
+                {% for t in p.taguri %}
+                    {% if t in taguri_active %}
+                        <span class="tag tag-activ">{{ t }}</span>
+                    {% else %}
+                        <a class="tag" href="?{{ parametri }}&tag={{ t|urlencode }}">{{ t }}</a>
+                    {% endif %}
+                 {% endfor %}
+            </div>
         </div>
         {% empty %}
         <p>Nu exista produse</p>

@@ -108,3 +108,21 @@ footer {
     display: block;
     width: fit-content;
 }
+
+.taguri {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.tag {
+    background-color: #e0e0e0;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 13px;
+    text-decoration: none;
+    color: black;
+}
+.tag-activ {
+    background-color: #1B5E20;
+    color: white;
+}

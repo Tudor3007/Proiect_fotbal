@@ -20,7 +20,9 @@
         <p>Culoare: {{ produs.culoare }}</p>
         <p>Stoc: {{ produs.stoc }}</p>
         <p>Marimi disponibile: {{ produs.marimi_disponibile|join:", " }}</p>
-        <p>Taguri: {{ produs.taguri|join:", "}}</p>
+        {% for t in produs.taguri %}
+            <a class="tag" href="{% url 'produse' %}?tag={{ t|urlencode }}">{{ t }}</a>
+        {% endfor %}
     </div>
 
     <h2>Produse din aceeasi categorie</h2>

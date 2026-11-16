@@ -228,8 +228,30 @@ def produse(request):
         coloana="nume"
     if sort == "d":
         coloana="-" + coloana
-    lista_produse = Produs.objects.order_by(coloana)
-    return render(request, "echipament_fotbal/produse.html", {"produse": lista_produse, "stoc_min": settings.STOC_MIN})
+
+    taguri_active=request.GET.getlist("tag")
+    lista_produse= Produs.objects.all()
+    if taguri_active:
+        lista_produse=lista_produse.filter(taguri__contains=taguri_active)
+    lista_produse = lista_produse.order_by(coloana)
+
+    taguri_eliminare= []
+    for t in taguri_active:
+        q = request.GET.copy()
+        q.setlist("tag",[x for x in taguri_active if x != t])
+        taguri_eliminare.append((t, q.urlencode()))
+    return render(request, "echipament_fotbal/produse.html",
+                  {"produse": lista_produse, "stoc_min": settings.STOC_MIN,
+                   "parametri": request.GET.urlencode(),
+                   "taguri_active": taguri_active,
+                   "taguri_eliminare": taguri_eliminare})
+
+def produs(request, id):
+    acc = inregistreaza_accesare(request)
+    p =  get_object_or_404(Produs, id=id)
+    similare = Produs.objects.filter(categorie=p.categorie).exclude(id=p.id).order_by("?")[:3]
+    return render(request, "echipament_fotbal/produs.html", {"produs": p, "similare": similare, "stoc_min": settings.STOC_MIN})
+
 def contact(request):
     acc = inregistreaza_accesare(request)
     return render(request, "echipament_fotbal/in_lucru.html")
@@ -249,8 +271,3 @@ def trimite_mail(request):
     )
     return HttpResponse("Mail trimis!")
 
-def produs(request, id):
-    acc = inregistreaza_accesare(request)
-    p =  get_object_or_404(Produs, id=id)
-    similare = Produs.objects.filter(categorie=p.categorie).exclude(id=p.id).order_by("?")[:3]
-    return render(request, "echipament_fotbal/produs.html", {"produs": p, "similare": similare, "stoc_min": settings.STOC_MIN})
