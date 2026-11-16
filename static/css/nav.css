@@ -126,3 +126,10 @@ footer {
     background-color: #1B5E20;
     color: white;
 }
+
+.paginare {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin: 15px 0;
+}

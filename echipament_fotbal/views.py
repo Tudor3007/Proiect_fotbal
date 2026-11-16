@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Produs
 from django.core.mail import send_mail
 from django.conf import settings
+from django.core.paginator import Paginator
 
 zile=["Luni","Marti","Miercuri","Joi","Vineri","Sambata","Duminica"]
 luni=["Ianuarie","Februarie","Martie","Aprilie","Mai","Iunie","Iulie","August","Septembrie","Octombrie",
@@ -239,12 +240,24 @@ def produse(request):
     for t in taguri_active:
         q = request.GET.copy()
         q.setlist("tag",[x for x in taguri_active if x != t])
+        q.pop("pagina",None)
         taguri_eliminare.append((t, q.urlencode()))
+
+    paginator = Paginator(lista_produse, settings.PROD_PER_PAG)
+    pagina = paginator.get_page(request.GET.get("pagina",1))
+    q = request.GET.copy()
+    q.pop("pagina",None)
+    parametri = q.urlencode()
+    q.pop("coloana",None)
+    q.pop("sort",None)
+    parametri_sortare = q.urlencode()
     return render(request, "echipament_fotbal/produse.html",
-                  {"produse": lista_produse, "stoc_min": settings.STOC_MIN,
-                   "parametri": request.GET.urlencode(),
+                  {"produse": pagina, "stoc_min": settings.STOC_MIN,
+                   "parametri": parametri,
                    "taguri_active": taguri_active,
-                   "taguri_eliminare": taguri_eliminare})
+                   "taguri_eliminare": taguri_eliminare,
+                   "pagina": pagina,
+                   "parametri_sortare": parametri_sortare})
 
 def produs(request, id):
     acc = inregistreaza_accesare(request)

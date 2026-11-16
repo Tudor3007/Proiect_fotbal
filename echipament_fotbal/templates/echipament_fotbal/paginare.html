@@ -1,0 +1,9 @@
+<div class="paginare">
+    {% if pagina.has_previous %}
+        <a href="?{{ parametri }}&pagina={{ pagina.previous_page_number }}">Anterioara</a>
+    {% endif %}
+    <span>Pagina {{ pagina.number }} din {{ pagina.paginator.num_pages }}</span>
+    {% if pagina.has_next %}
+        <a href="?{{ parametri }}&pagina={{ pagina.next_page_number }}">Urmatoarea</a>
+    {% endif %}
+</div>

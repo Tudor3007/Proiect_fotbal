@@ -5,12 +5,12 @@
     <h1>Produse</h1>
     <div class="sortare">
         <span>Sorteaza dupa:</span>
-        <a href="?coloana=nume&sort=a">Nume A-Z</a>
-        <a href="?coloana=nume&sort=d">Nume Z-A</a>
-        <a href="?coloana=pret&sort=a">Pret crescator</a>
-        <a href="?coloana=pret&sort=d">Pret descrescator</a>
-        <a href="?coloana=stoc&sort=d">Stoc (cel mai mare)</a>
-        <a href="?coloana=data_adaugare&sort=d">Cele mai noi</a>
+        <a href="?{{ parametri_sortare }}&coloana=nume&sort=a">Nume A-Z</a>
+        <a href="?{{ parametri_sortare }}&coloana=nume&sort=d">Nume Z-A</a>
+        <a href="?{{ parametri_sortare }}&coloana=pret&sort=a">Pret crescator</a>
+        <a href="?{{ parametri_sortare }}&coloana=pret&sort=d">Pret descrescator</a>
+        <a href="?{{ parametri_sortare }}&coloana=stoc&sort=d">Stoc (cel mai mare)</a>
+        <a href="?{{ parametri_sortare }}&coloana=data_adaugare&sort=d">Cele mai noi</a>
     </div>
     {% if taguri_eliminare %}
         <div class="taguri">
@@ -20,6 +20,10 @@
             {% endfor %}
         </div>
     {% endif %}
+    {% if pagina.paginator.count %}
+        <p>Se afiseaza produsele intre {{ pagina.start_index }} si {{ pagina.end_index  }} din totalul de {{ pagina.paginator.count }} produse.</p>
+    {% endif %}
+    {% include "echipament_fotbal/paginare.html" %}
     <div class="lista-produse">
         {% for p in produse %}
         <div class="produs">
@@ -49,4 +53,5 @@
         <p>Nu exista produse</p>
         {% endfor %}
     </div>
+    {% include "echipament_fotbal/paginare.html" %}
 {% endblock %}
