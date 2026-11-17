@@ -20,6 +20,13 @@
                 <li><a href="{% url 'despre' %}">Despre</a></li>
                 <li><a href="{% url 'istoric' %}">Istoric</a></li>
                 <li><a href="{% url 'produse' %}">Produse</a></li>
+                <li><a>Categorii</a>
+                    <ul>
+                        {% for c in categorii_meniu %}
+                            <li><a href="{{ c.get_absolute_url }}">{{ c.nume }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
                 <li><a href="{% url 'cos_virtual' %}">Cos virtual</a></li>
             </ul>
