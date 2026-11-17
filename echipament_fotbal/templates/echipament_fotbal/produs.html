@@ -14,7 +14,10 @@
         {% endif %}
         <p>Descriere: {{ produs.descriere }}</p>
         <p>Pret: {{ produs.pret }} lei</p>
-        <p>Categorie: {{ produs.categorie }}</p>
+        {% if produs.categorie.sigla %}
+            <img class="sigla-categorie" src="{{ produs.categorie.sigla.url }}" alt="{{ produs.categorie.nume }}">
+        {% endif %}
+        <a href="{{ produs.categorie.get_absolute_url }}" style="color: {{ produs.categorie.culoare }};">{{ produs.categorie.nume }}</a>
         <p>Brand: {{ produs.brand|default:"-" }}</p>
         <p>Gen: {{ produs.get_gen_display }}</p>
         <p>Culoare: {{ produs.culoare }}</p>

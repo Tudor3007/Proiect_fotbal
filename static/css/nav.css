@@ -134,3 +134,9 @@ footer {
     margin: 15px 0;
     justify-content: flex-end;
 }
+
+.produs .sigla-categorie, .sigla-categorie {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}

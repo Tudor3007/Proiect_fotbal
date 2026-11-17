@@ -4,7 +4,12 @@
 {% block continut %}
     {% include "echipament_fotbal/paginare.html" %}
     {% if categorie %}
-        <h1> {{ categorie.nume }} </h1>
+        <h1 style="color:{{ categorie.culoare }}">
+            {% if categorie.sigla %}
+                <img class="sigla-categorie" src="{{ categorie.sigla.url }}" alt="{{ categorie.nume }}">
+            {% endif %}
+            {{ categorie.nume }}
+        </h1>
         <p>{{ categorie.descriere }}</p>
     {% else %}
         <h1>Produse</h1>
@@ -31,14 +36,17 @@
     {% endif %}
     <div class="lista-produse">
         {% for p in produse %}
-        <div class="produs">
+        <div class="produs" style="border-color: {{ p.categorie.culoare }};">
             <h2><a href="{{ p.get_absolute_url }}">{{ p.nume }}</a></h2>
             {% if p.imagine %}
                 <img src="{{ p.imagine.url }}" alt="{{ p.nume }}">
             {% else %}
                 <img src="{% static 'imagini/imagine_indisponibila.jpg' %}" alt="imagine indisponibila">
             {% endif %}
-            <p>Categorie: {{ p.categorie.nume}}</p>
+            {% if p.categorie.sigla %}
+                <img class="sigla-categorie" src="{{ p.categorie.sigla.url }}" alt="{{ p.categorie.nume }}">
+            {% endif %}
+            <a href="{{ p.categorie.get_absolute_url }}" style="color: {{ p.categorie.culoare }};">{{ p.categorie.nume }}</a>
             <p>Pret: {{ p.pret }} lei</p>
             <p>Brand: {{ p.brand.nume }}</p>
             {% if p.stoc < stoc_min %}
