@@ -53,6 +53,7 @@ class Categorie(models.Model):
     )
     ordine_afisare = models.PositiveIntegerField(default=0)
 
+
     class Meta:
         verbose_name_plural = "Categorii"
         ordering = ["ordine_afisare"]
@@ -66,6 +67,9 @@ class Categorie(models.Model):
 
     def __str__(self):
         return self.nume
+
+    def get_absolute_url(self):
+        return reverse("categorie", args=[self.slug])
 
 
 class Magazin(models.Model):

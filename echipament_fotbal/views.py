@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from urllib.parse import urlencode
 from django.shortcuts import render, get_object_or_404
-from .models import Produs
+from .models import Produs, Categorie
 from django.core.mail import send_mail
 from django.conf import settings
 from django.core.paginator import Paginator
@@ -220,36 +220,35 @@ def accesare(request,id):
     else:
         return render(request, "echipament_fotbal/accesare.html", {"mesaj": mesaj})
 
-def produse(request):
-    acc = inregistreaza_accesare(request)
-    coloane_permise=["nume", "pret", "stoc", "data_adaugare"]
-    coloana = request.GET.get("coloana", "nume")
-    sort=request.GET.get("sort", "a")
-    if coloana not in coloane_permise:
-        coloana="nume"
-    if sort == "d":
-        coloana="-" + coloana
 
-    taguri_active=request.GET.getlist("tag")
-    lista_produse= Produs.objects.all()
+def afiseaza_produse(request, lista_produse, categorie=None):
+    coloane_permise = ["nume", "pret", "stoc", "data_adaugare"]
+    coloana = request.GET.get("coloana", "nume")
+    sort = request.GET.get("sort", "a")
+    if coloana not in coloane_permise:
+        coloana = "nume"
+    if sort == "d":
+        coloana = "-" + coloana
+
+    taguri_active = request.GET.getlist("tag")
     if taguri_active:
-        lista_produse=lista_produse.filter(taguri__contains=taguri_active)
+        lista_produse = lista_produse.filter(taguri__contains=taguri_active)
     lista_produse = lista_produse.order_by(coloana)
 
-    taguri_eliminare= []
+    taguri_eliminare = []
     for t in taguri_active:
         q = request.GET.copy()
-        q.setlist("tag",[x for x in taguri_active if x != t])
-        q.pop("pagina",None)
+        q.setlist("tag", [x for x in taguri_active if x != t])
+        q.pop("pagina", None)
         taguri_eliminare.append((t, q.urlencode()))
 
     paginator = Paginator(lista_produse, settings.PROD_PER_PAG)
-    pagina = paginator.get_page(request.GET.get("pagina",1))
+    pagina = paginator.get_page(request.GET.get("pagina", 1))
     q = request.GET.copy()
-    q.pop("pagina",None)
+    q.pop("pagina", None)
     parametri = q.urlencode()
-    q.pop("coloana",None)
-    q.pop("sort",None)
+    q.pop("coloana", None)
+    q.pop("sort", None)
     parametri_sortare = q.urlencode()
     return render(request, "echipament_fotbal/produse.html",
                   {"produse": pagina, "stoc_min": settings.STOC_MIN,
@@ -257,7 +256,18 @@ def produse(request):
                    "taguri_active": taguri_active,
                    "taguri_eliminare": taguri_eliminare,
                    "pagina": pagina,
-                   "parametri_sortare": parametri_sortare})
+                   "parametri_sortare": parametri_sortare,
+                   "categorie": categorie})
+
+def categorie(request, slug):
+    acc = inregistreaza_accesare(request)
+    cat = get_object_or_404(Categorie, slug = slug)
+    return afiseaza_produse(request, Produs.objects.filter(categorie=cat), cat)
+
+def produse(request):
+    acc = inregistreaza_accesare(request)
+    return afiseaza_produse(request, Produs.objects.all())
+
 
 def produs(request, id):
     acc = inregistreaza_accesare(request)

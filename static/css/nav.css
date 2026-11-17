@@ -132,4 +132,5 @@ footer {
     gap: 15px;
     align-items: center;
     margin: 15px 0;
+    justify-content: flex-end;
 }

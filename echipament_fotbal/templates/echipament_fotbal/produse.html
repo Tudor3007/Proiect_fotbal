@@ -2,7 +2,13 @@
 {% load static %}
 
 {% block continut %}
-    <h1>Produse</h1>
+    {% include "echipament_fotbal/paginare.html" %}
+    {% if categorie %}
+        <h1> {{ categorie.nume }} </h1>
+        <p>{{ categorie.descriere }}</p>
+    {% else %}
+        <h1>Produse</h1>
+    {% endif %}
     <div class="sortare">
         <span>Sorteaza dupa:</span>
         <a href="?{{ parametri_sortare }}&coloana=nume&sort=a">Nume A-Z</a>
@@ -23,7 +29,6 @@
     {% if pagina.paginator.count %}
         <p>Se afiseaza produsele intre {{ pagina.start_index }} si {{ pagina.end_index  }} din totalul de {{ pagina.paginator.count }} produse.</p>
     {% endif %}
-    {% include "echipament_fotbal/paginare.html" %}
     <div class="lista-produse">
         {% for p in produse %}
         <div class="produs">
